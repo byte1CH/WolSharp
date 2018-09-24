@@ -7,6 +7,10 @@
     <Authors>Robin Derungs</Authors>
     <Company>Byte1</Company>
     <Description>A simple .NET Standard library for sending WakeOnLan packets (Magic packet) over ethernet</Description>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/byte1CH/WolSharp/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/byte1CH/WolSharp</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/byte1CH/WolSharp</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
 </Project>
