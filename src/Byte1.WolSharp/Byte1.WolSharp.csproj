@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <Authors>Robin Derungs</Authors>
+    <Company>Byte1</Company>
+    <Description>A simple .NET Standard library for sending WakeOnLan packets (Magic packet) over ethernet</Description>
+  </PropertyGroup>
+
+</Project>
