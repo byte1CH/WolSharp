@@ -1,14 +1,16 @@
-FROM microsoft/dotnet:2.1-sdk AS build
+FROM microsoft/dotnet:2.1-sdk AS build-env
 WORKDIR /app
 
+# Copy csproj and restore as distinct layers
 COPY *.csproj ./
 RUN dotnet restore
 
-COPY . .
-WORKDIR /app/
-RUN dotnet publish -o out
+# Copy everything else and build
+COPY . ./
+RUN dotnet publish -c Release -o out
 
-FROM microsoft/dotnet:2.1-runtime AS runtime
+# Build runtime image
+FROM microsoft/dotnet:2.1-aspnetcore-runtime
 WORKDIR /app
-COPY --from=build /app/out ./
+COPY --from=build-env /app/out .
 ENTRYPOINT ["dotnet", "Byte1.WolSharp.Web.dll"]

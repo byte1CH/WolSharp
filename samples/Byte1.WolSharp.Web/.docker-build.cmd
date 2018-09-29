@@ -1,1 +1,1 @@
-docker build -t byte1/wolsharp .
+docker build -t byte1/wolsharp:latest .

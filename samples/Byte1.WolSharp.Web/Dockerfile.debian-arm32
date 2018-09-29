@@ -1,35 +1,16 @@
-FROM microsoft/dotnet:2.1-aspnetcore-runtime AS base
+FROM microsoft/dotnet:2.1-sdk AS build-env
 WORKDIR /app
-EXPOSE 2399
-EXPOSE 44386
 
-FROM microsoft/dotnet:2.1-sdk AS build
-WORKDIR /src
-COPY ["TestDeleteMe/TestDeleteMe.csproj", "TestDeleteMe/"]
-RUN dotnet restore "TestDeleteMe/TestDeleteMe.csproj"
-COPY . .
-WORKDIR "/src/TestDeleteMe"
-RUN dotnet build "TestDeleteMe.csproj" -c Release -o /app
+# Copy csproj and restore as distinct layers
+COPY *.csproj ./
+RUN dotnet restore
 
-FROM build AS publish
-RUN dotnet publish "TestDeleteMe.csproj" -c Release -o /app
+# Copy everything else and build
+COPY . ./
+RUN dotnet publish -c Release -o out
 
-FROM base AS final
+# Build runtime image
+FROM microsoft/dotnet:2.1.4-aspnetcore-runtime-stretch-slim-arm32v7
 WORKDIR /app
-COPY --from=publish /app .
-ENTRYPOINT ["dotnet", "TestDeleteMe.dll"]
-
-#FROM microsoft/dotnet:2.1-sdk AS build
-#WORKDIR /app
-
-#COPY *.csproj ./
-#RUN dotnet restore
-
-#COPY . .
-#WORKDIR /app/
-#RUN dotnet publish -o out
-
-#FROM microsoft/dotnet:2.1-sdk-stretch-arm32v7 AS runtime
-#WORKDIR /app
-#COPY --from=build /app/out ./
-#ENTRYPOINT ["dotnet", "Byte1.WolSharp.Web.dll"]
+COPY --from=build-env /app/out .
+ENTRYPOINT ["dotnet", "Byte1.WolSharp.Web.dll"]
