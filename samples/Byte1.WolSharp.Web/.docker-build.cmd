@@ -1,1 +1,1 @@
-docker build -t derungsoft/wolsharp .
+docker build -t byte1/wolsharp .
